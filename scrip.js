@@ -7,21 +7,31 @@ function mostraPalavrasChave() {
     const campoResultado = document.querySelector('#resultado-palavrachave');
     const palavrasChave = processaTexto(texto);
 
-
     campoResultado.textContent = palavrasChave.join(", ");
 }
+
 function processaTexto(texto) {
     let palavras = texto.split(/\P{L}+/u);
- 
-    letfrequencias = {}
+    const frequencias = contaFrequencias(palavras);
+    let ordenadas = Object.keys(frequencias).sort(ordenaPalavra);
+
+    function ordenaPalavra(p1, p2) {
+        return frequencias[p2] - frequencias[p1];
+    }
+
+    console.log(ordenadas);
+    return ordenadas.slice(0, 10);
+}
+
+function contaFrequencias(palavras) {
+    let frequencias = {};
     for (let i of palavras) {
-         frequencia[1] =0;
-               for(let j of palavras) {
-                   if(i==j) {
-                       frequencia[i]++;
-                }
+        frequencias[i] = 0;
+        for (let j of palavras) {
+            if (i == j) {
+                frequencias[i]++;
             }
- }
-    return palavras;
-  }
-  (!)
+        }
+    }
+    return frequencias;
+}
